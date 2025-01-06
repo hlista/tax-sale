@@ -1,4 +1,4 @@
-import { ConnectionOptions, DefaultJobOptions } from 'bullmq';
+import { ConnectionOptions, DefaultJobOptions, RepeatOptions, JobSchedulerTemplateOptions } from 'bullmq';
 import { JobsEnum, QueuesEnum } from './constants';
 
 export type JobType = keyof typeof JobsEnum;
@@ -15,5 +15,12 @@ export interface WorkerConfigType extends BaseConfigType {
 }
 
 export interface QueueConfigType extends BaseConfigType {
+  defaultJobOptions?: DefaultJobOptions
+}
+
+
+export interface JobSchedulerConfigType {
+  jobSchedulerId: QueuesEnum,
+  repeatOptions: RepeatOptions,
   defaultJobOptions?: DefaultJobOptions
 }

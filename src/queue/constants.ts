@@ -4,5 +4,6 @@ export const enum JobsEnum {
 
 export const enum QueuesEnum {
   DEFAULT = 'DEFAULT',
-  MAILBOT = 'MAILBOT'
+  MAILBOT = 'MAILBOT',
+  QUERYTAXSALE = 'QUERYTAXSALE'
 }

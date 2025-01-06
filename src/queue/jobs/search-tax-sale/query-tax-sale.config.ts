@@ -4,8 +4,8 @@ import { QueuesEnum } from '../../constants';
 
 const config: WorkerConfigType = {
   ...rootConfig,
-  queueName: QueuesEnum.MAILBOT,
-  isSandboxed: false
+  queueName: QueuesEnum.QUERYTAXSALE,
+  isSandboxed: true
 }
 
 export default config;
