@@ -5,14 +5,14 @@ export default class SendEmailProcessor implements ProcessorDef {
   constructor() {}
 
   async handle(job: Job) {
-    console.log(job);
+    console.log("handle");
   }
 
   failed(job?: Job) {
-    console.log({ job })
+    console.log("failed")
   }
 
   completed(job: Job) {
-    console.log({ job })
+    console.log("completed")
   }
 }

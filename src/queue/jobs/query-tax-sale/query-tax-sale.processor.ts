@@ -6,7 +6,8 @@ export default class QueryTaxSaleProcessor implements ProcessorDef {
   constructor() {}
 
   async handle(job: Job) {
-    processTaxSale(job.data.parcelNumber)
+    console.log("here");
+    processTaxSale(job.data.parcelNumber);
   }
 
   failed(job?: Job) {

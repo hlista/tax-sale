@@ -6,8 +6,21 @@ export interface dupNumberJsonPayload {
   Results:Array<dupNumberObject>
 }
 
+export interface AssessedValuesJson {
+  Amount: number,
+  Description: String,
+  PayYear: Number
+}
+
+export interface ExemptionsDeductionsJson {
+  AMOUNT: number,
+  DESCRIPTION: String
+}
+
 export interface PropertyJson{
-  propertyInfo: PropertyInfoJsonPayload
+  propertyInfo: PropertyInfoJsonPayload,
+  assessedValues: Array<AssessedValuesJson>,
+  exemptionsDeductions: Array<ExemptionsDeductionsJson>
 }
 
 export interface PropertyInfoJsonPayload{
