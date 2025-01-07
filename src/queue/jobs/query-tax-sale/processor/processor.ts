@@ -11,7 +11,7 @@ async function getProperty(duplicateNumber: Number) : Promise<PropertyJson> {
   return await response.json() as PropertyJson
 }
 
-export async function processTaxSale(parcelNumber: String) {
+export async function processTaxSale(parcelNumber: string) {
   const dupNum = (await getDupNumber(parcelNumber)).Results[0].DuplicateNumber;
   const body = await getProperty(dupNum)
   const taxSale = (body.propertyInfo.TaxSaleSold === 'T') ? true : false;
@@ -38,7 +38,7 @@ export async function processTaxSale(parcelNumber: String) {
 
   const updateProperty = await prisma.property.update({
     where: {
-      parcelNumber: parcelNumber as string
+      parcelNumber: parcelNumber
     },
     data: {
       taxSale: taxSale,
@@ -48,5 +48,4 @@ export async function processTaxSale(parcelNumber: String) {
       homesteadDeduction: homestead_deduction
     }
   })
-  console.log(taxSale);
 }
