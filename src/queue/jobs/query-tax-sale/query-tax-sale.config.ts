@@ -5,7 +5,7 @@ import { QueuesEnum } from '../../constants';
 const config: WorkerConfigType = {
   ...rootConfig,
   queueName: QueuesEnum.QUERYTAXSALE,
-  isSandboxed: true
+  isSandboxed: false
 }
 
 export default config;

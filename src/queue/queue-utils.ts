@@ -1,7 +1,8 @@
-import { SendEmailWorker } from './jobs';
+import { SendEmailWorker, QueryTaxSaleWorker} from './jobs';
 
 const WorkerMap = new Map([
-  ['SendEmail', SendEmailWorker]
+  ['SendEmail', SendEmailWorker],
+  ['QueryTaxSale', QueryTaxSaleWorker]
 ]);
 
 /**
