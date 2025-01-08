@@ -4,9 +4,24 @@
  */
 
 
-
-
-
+import type { Context } from "./src/context"
+import type { core } from "nexus"
+declare global {
+  interface NexusGenCustomInputMethods<TypeName extends string> {
+    /**
+     * A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
+     */
+    dateTime<FieldName extends string>(fieldName: FieldName, opts?: core.CommonInputFieldConfig<TypeName, FieldName>): void // "DateTime";
+  }
+}
+declare global {
+  interface NexusGenCustomOutputMethods<TypeName extends string> {
+    /**
+     * A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
+     */
+    dateTime<FieldName extends string>(fieldName: FieldName, ...opts: core.ScalarOutSpread<TypeName, FieldName>): void // "DateTime";
+  }
+}
 
 
 declare global {
@@ -25,9 +40,22 @@ export interface NexusGenScalars {
   Float: number
   Boolean: boolean
   ID: string
+  DateTime: any
 }
 
 export interface NexusGenObjects {
+  Mutation: {};
+  Property: { // root type
+    grossAccessedValueOfProperty?: string | null; // String
+    homesteadDeduction?: string | null; // String
+    id: number; // Int!
+    location?: string | null; // String
+    mortgageDeduction?: string | null; // String
+    nameAndAddress?: string | null; // String
+    parcelNumber: string; // String!
+    taxSale?: boolean | null; // Boolean
+    updatedAt: NexusGenScalars['DateTime']; // DateTime!
+  }
   Query: {};
 }
 
@@ -42,18 +70,51 @@ export type NexusGenRootTypes = NexusGenObjects
 export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars
 
 export interface NexusGenFieldTypes {
+  Mutation: { // field return type
+    createProperty: NexusGenRootTypes['Property']; // Property!
+  }
+  Property: { // field return type
+    grossAccessedValueOfProperty: string | null; // String
+    homesteadDeduction: string | null; // String
+    id: number; // Int!
+    location: string | null; // String
+    mortgageDeduction: string | null; // String
+    nameAndAddress: string | null; // String
+    parcelNumber: string; // String!
+    taxSale: boolean | null; // Boolean
+    updatedAt: NexusGenScalars['DateTime']; // DateTime!
+  }
   Query: { // field return type
-    ok: boolean; // Boolean!
+    properties: NexusGenRootTypes['Property'][]; // [Property!]!
   }
 }
 
 export interface NexusGenFieldTypeNames {
+  Mutation: { // field return type name
+    createProperty: 'Property'
+  }
+  Property: { // field return type name
+    grossAccessedValueOfProperty: 'String'
+    homesteadDeduction: 'String'
+    id: 'Int'
+    location: 'String'
+    mortgageDeduction: 'String'
+    nameAndAddress: 'String'
+    parcelNumber: 'String'
+    taxSale: 'Boolean'
+    updatedAt: 'DateTime'
+  }
   Query: { // field return type name
-    ok: 'Boolean'
+    properties: 'Property'
   }
 }
 
 export interface NexusGenArgTypes {
+  Mutation: {
+    createProperty: { // args
+      parcelNumber: string; // String!
+    }
+  }
 }
 
 export interface NexusGenAbstractTypeMembers {
@@ -87,7 +148,7 @@ export type NexusGenFeaturesConfig = {
 }
 
 export interface NexusGenTypes {
-  context: any;
+  context: Context;
   inputTypes: NexusGenInputs;
   rootTypes: NexusGenRootTypes;
   inputTypeShapes: NexusGenInputs & NexusGenEnums & NexusGenScalars;

@@ -15,6 +15,6 @@ export default class QueryTaxSaleProcessor implements ProcessorDef {
   }
 
   completed(job: Job) {
-    console.log({ job })
+    console.log(`completed ${job.data.parcelNumber}`)
   }
 }
