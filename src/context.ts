@@ -7,5 +7,5 @@ export interface Context {    // 1
 }
 
 export const context: Context = {   // 2
-  prisma,
+  prisma
 };
