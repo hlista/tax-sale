@@ -1,5 +1,6 @@
 defmodule TaxSale.Search do
   alias TaxSale.Search.Counties.{
+    Allen,
     LaPorte,
     Lake,
     Porter,
@@ -18,6 +19,8 @@ defmodule TaxSale.Search do
           Porter.search_and_update(tax_record_id)
         "45" ->
           Lake.search_and_update(tax_record_id)
+        "02" ->
+          Allen.search_and_update(tax_record_id)
         _ ->
           {:error, ErrorMessage.conflict("Unable to search for county")}
       end

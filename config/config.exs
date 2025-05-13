@@ -25,6 +25,8 @@ config :tax_sale, Oban,
      ]}
   ]
 
+config :tax_sale, :tax_year, 2025
+
 config :floki, :html_parser, Floki.HTMLParser.Html5ever
 
 config :ecto_shorts,

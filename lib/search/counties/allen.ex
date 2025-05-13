@@ -1,4 +1,4 @@
-defmodule TaxSale.Search.Counties.Porter do
+defmodule TaxSale.Search.Counties.Allen do
   require Logger
   alias PG.Context
 
@@ -10,7 +10,7 @@ defmodule TaxSale.Search.Counties.Porter do
   end
 
   def update_tax_record(tax_record) do
-    with {:ok, property_info} <- LowTaxInfo.fetch_property_info(tax_record.parcel_number, "POR", tax_year()) do
+    with {:ok, property_info} <- LowTaxInfo.fetch_property_info(tax_record.parcel_number, "ALN", tax_year()) do
       property_info = Map.put(property_info, :last_search, DateTime.utc_now())
       Context.update_tax_record(tax_record, property_info)
     end
