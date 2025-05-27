@@ -1,6 +1,16 @@
 defmodule PG.Context do
-  alias EctoShorts.Actions
+  alias EctoShorts.{
+    Actions,
+    CommonFilters
+  }
   alias PG.Schemas.TaxRecord
+  import Ecto.Query
+
+  def tax_record_exists?(params \\ %{}) do
+    TaxRecord
+    |> CommonFilters.convert_params_to_filter(params)
+    |> TaxSale.Repo.exists?()
+  end
 
   def all_tax_records(params \\ %{}) do
     Actions.all(TaxRecord, params)
@@ -28,5 +38,14 @@ defmodule PG.Context do
 
   def delete_all_tax_records() do
     TaxSale.Repo.delete_all(TaxRecord)
+  end
+
+  def fetch_next_tax_record(current_id) do
+    TaxRecord
+    |> where([u], u.id > ^current_id)
+    |> order_by(asc: :id)
+    |> limit(1)
+    |> select([u], u.id)
+    |> TaxSale.Repo.one()
   end
 end

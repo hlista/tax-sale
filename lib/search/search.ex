@@ -7,6 +7,8 @@ defmodule TaxSale.Search do
     StJoseph
   }
   alias PG.Context
+  require Logger
+
   def run(tax_record_id) do
     with {:ok, tax_record} <- Context.find_tax_record(%{id: tax_record_id}) do
       prefix = String.slice(tax_record.parcel_number, 0..1)
@@ -21,8 +23,9 @@ defmodule TaxSale.Search do
           Lake.search_and_update(tax_record_id)
         "02" ->
           Allen.search_and_update(tax_record_id)
-        _ ->
-          {:error, ErrorMessage.conflict("Unable to search for county")}
+        prefix ->
+          Logger.info("cannot search for prefix #{prefix}")
+          :ok
       end
     end
   end

@@ -21,7 +21,7 @@ config :tax_sale, Oban,
     {Oban.Plugins.Pruner, max_age: 300},
     {Oban.Plugins.Cron,
      crontab: [
-       {"0 */4 * * *", TaxSale.SearchWorker, args: %{event: "enqueue_tax_record_ids"}}
+       {"0 8 * * *", TaxSale.SearchWorker, args: %{event: "start"}}
      ]}
   ]
 

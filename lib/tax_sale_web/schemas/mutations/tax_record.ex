@@ -9,6 +9,12 @@ defmodule TaxSale.Schemas.Mutations.TaxRecord do
       resolve &Resolvers.TaxRecord.add/2
     end
 
+    field :backfill_oban, :integer do
+      arg :id, non_null(:id)
+      arg :token, non_null(:string)
+      resolve &Resolvers.TaxRecord.backfill/2
+    end
+
     field :delete_all_tax_records, :integer do
       arg :token, non_null(:string)
       resolve &Resolvers.TaxRecord.delete_all/2

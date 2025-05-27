@@ -37,10 +37,19 @@ defmodule TaxSale.Search.Counties.Lake do
       quick_search_request(@quick_search_url, cookie, verification_token, "647", parcel_number)
     json = Jason.decode!(body)
     fields = List.first(json["items"])["fields"]
+    get_name_and_address(fields)
     %{
-      name_and_address: "#{String.trim(fields["Owner"])} #{String.trim(fields["MailAddress"])} #{String.trim(fields["MailCityStateZip"])}",
+      name_and_address: get_name_and_address(fields),
       location: fields["Situs"]
     }
+  end
+
+  defp get_name_and_address(%{"Owner" => owner, "MailAddress" => mail_address, "MailCityStateZip" => mail_city_state_zip}) do
+    "#{String.trim(owner)} #{String.trim(mail_address)} #{String.trim(mail_city_state_zip)}"
+  end
+
+  defp get_name_and_address(_) do
+    nil
   end
 
   def get_request_cookie_and_token(pid) do

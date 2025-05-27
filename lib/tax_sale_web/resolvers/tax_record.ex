@@ -10,26 +10,37 @@ defmodule TaxSale.Resolvers.TaxRecord do
   end
 
   def add(%{parcel_numbers: parcel_numbers, token: @access_token}, _) do
-    Enum.reduce(parcel_numbers, [], fn parcel_number, acc ->
-      case Context.find_or_create_tax_record(%{parcel_number: parcel_number}) do
-        {:ok, schema} ->
-          queue_oban_job(schema)
-          [schema | acc]
-        _ ->
+    tax_records = Enum.reduce(parcel_numbers, [], fn parcel_number, acc ->
+      case Context.tax_record_exists?(%{parcel_number: parcel_number}) do
+        true ->
           acc
+        false ->
+          case Context.create_tax_record(%{parcel_number: parcel_number}) do
+            {:ok, schema} ->
+              [schema | acc]
+            _ ->
+              acc
+          end
       end
     end)
-    |> then(&({:ok, &1}))
+    case List.last(tax_records) do
+      nil ->
+        {:ok, []}
+      tax_record ->
+        queue_oban_job(tax_record.id)
+        {:ok, tax_records}
+    end
   end
 
   def add(_, _) do
     {:error, "Invalid Token"}
   end
 
-  defp queue_oban_job(tax_record) do
+  defp queue_oban_job(tax_record_id) do
     %{
       event: "perform_search",
-      tax_record_id: tax_record.id
+      id: tax_record_id,
+      backfill: true
     }
     |> TaxSale.SearchWorker.new()
     |> Oban.insert()
@@ -43,5 +54,14 @@ defmodule TaxSale.Resolvers.TaxRecord do
 
   def delete_all(_, _) do
     {:error, "Invalid Token"}
+  end
+
+  def backfill(%{token: @access_token, id: id}, _) do
+    queue_oban_job(id)
+    {:ok, 1}
+  end
+
+  def backfill(_, _) do
+    {:ok, 0}
   end
 end
